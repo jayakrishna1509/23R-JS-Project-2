@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+    <link rel="icon" href="./assets/images/logo.jpg" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/signin.css" />
+  </head>
+  <body>
+    <div class="main">
+      <h1>Sign In</h1>
+      <form id="signinForm" novalidate>
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Email" required />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+
+        <div class="btn-container">
+          <button type="submit" class="btn">Submit</button>
+        </div>
+      </form>
+
+      <div class="links">
+        <span class="member-text">Not a Member?</span>
+        <a href="./signup.html" class="signup-link">Sign Up</a>
+        <br />
+        <span class="guest-prefix">Login as a</span>
+        <a href="./main.html" id="guestLogin" class="guest-link">Guest</a>
+      </div>
+      <div class="forgot-password">
+        <a href="./reset-password.html" id="forgotPasswordLink"
+          >Forgot Password?</a
+        >
+      </div>
+    </div>
+    <script type="module" src="./js/signin.js"></script>
+  </body>
+</html>
