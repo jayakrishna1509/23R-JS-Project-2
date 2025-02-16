@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complaints Details</title>
+    <link rel="icon" href="./assets/images/logo.jpg" type="image/x-icon" />
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background-color: #1c0a51;
+        margin: 0;
+        padding: 30px;
+      }
+
+      .box {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 30px;
+        padding: 0 20px;
+      }
+
+      .box button {
+        margin-left: 10px;
+        padding: 8px 20px;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      .back {
+        background-color: #4caf50;
+        color: black;
+      }
+
+      .logout {
+        background-color: #f44336;
+        color: black;
+      }
+
+      .box button:hover {
+        opacity: 0.9;
+      }
+
+      h1 {
+        color: white;
+        margin-bottom: 30px;
+        font-size: 36px;
+      }
+
+      .table-container {
+        width: 90%;
+        max-width: 1200px;
+        margin-bottom: 40px;
+        overflow-x: auto;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: white;
+      }
+
+      th {
+        background-color: #2d77a4;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        padding: 15px;
+        text-align: center;
+        border-right: 1px solid #1c0a51;
+      }
+
+      th:last-child {
+        border-right: none;
+      }
+
+      td {
+        font-size: 20px;
+        padding: 12px 15px;
+        text-align: center;
+        border-right: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        background-color: rgb(228, 237, 245);
+      }
+
+      td:last-child {
+        border-right: none;
+      }
+
+      tr:nth-child(even) td {
+        background-color: #f8f8f8;
+      }
+
+      tr:hover td {
+        background-color: #e6f3ff;
+      }
+
+      /* Media queries */
+      @media (max-width: 768px) {
+        .table-container {
+          width: 95%;
+        }
+
+        .box {
+          justify-content: center;
+        }
+
+        th,
+        td {
+          padding: 10px;
+          font-size: 14px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .box {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .box button {
+          margin: 5px 0;
+        }
+
+        th,
+        td {
+          padding: 8px;
+          font-size: 12px;
+        }
+
+        h1 {
+          font-size: 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <button class="back">Back</button>
+      <button class="logout">Logout</button>
+    </div>
+    <h1>Complaints Details</h1>
+    <div class="table-container">
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Mobile Number</th>
+          <th>Email</th>
+          <th>Message</th>
+        </tr>
+      </table>
+    </div>
+
+    <script>
+      document
+        .getElementsByClassName("back")[0]
+        .addEventListener("click", () => {
+          window.location.assign("adminpage.html");
+        });
+
+      document
+        .getElementsByClassName("logout")[0]
+        .addEventListener("click", () => {
+          window.location.assign("main.html");
+        });
+
+      var booking = JSON.parse(localStorage.getItem("contactInfo"));
+      console.log(booking);
+      var table1 = document.getElementsByTagName("table");
+
+      for (let i = 0; i < booking.length; i++) {
+        tr1 = document.createElement("tr");
+        table1[0].appendChild(tr1);
+
+        td1 = document.createElement("td");
+        tr1.appendChild(td1);
+        td1.innerText = booking[i].name;
+
+        td1 = document.createElement("td");
+        tr1.appendChild(td1);
+        td1.innerText = booking[i].mobile;
+
+        td1 = document.createElement("td");
+        tr1.appendChild(td1);
+        td1.innerText = booking[i].email;
+
+        td1 = document.createElement("td");
+        tr1.appendChild(td1);
+        td1.innerText = booking[i].message;
+      }
+    </script>
+  </body>
+</html>
