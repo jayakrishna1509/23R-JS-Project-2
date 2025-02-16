@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="icon" href="./assets/images/logo.jpg" type="image/x-icon" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #1c0a51;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        font-family: "Arial", sans-serif;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 400px;
+        width: 100%;
+        padding: 20px;
+        flex-wrap: wrap;
+      }
+
+      .box {
+        width: 320px;
+        height: 380px;
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        transition: transform 0.3s ease;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .image-container {
+        width: 100%;
+        height: 220px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+      }
+
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+
+      h3 {
+        color: #333;
+        margin: 15px 0;
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+
+      button {
+        width: 120px;
+        height: 40px;
+        border: none;
+        border-radius: 20px;
+        font-size: 16px;
+        background-color: #4a55ed;
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      button:active {
+        background-color: #2831b8;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          gap: 100px;
+        }
+        .box {
+          width: 260px;
+          height: 350px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="box">
+        <div class="image-container">
+          <img src="./assets/images/booking.jpg" alt="Booking" />
+        </div>
+        <h3>Booking Details</h3>
+        <button>View</button>
+      </div>
+      <div class="box">
+        <div class="image-container">
+          <img src="./assets/images/complaints.jpg" alt="Complaints" />
+        </div>
+        <h3>Complaints Details</h3>
+        <button>View</button>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementsByTagName("button")[0]
+        .addEventListener("click", () => {
+          window.location.assign("bookingdetails.html");
+        });
+      document
+        .getElementsByTagName("button")[1]
+        .addEventListener("click", () => {
+          window.location.assign("complaints.html");
+        });
+    </script>
+  </body>
+</html>
