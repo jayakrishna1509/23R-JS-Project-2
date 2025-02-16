@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+    <link rel="icon" href="./assets/images/logo.jpg" type="image/x-icon" />
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-image: url("./assets/images/admin-bg.jpg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        font-family: "Arial", sans-serif;
+        overflow: hidden;
+        margin: 0;
+      }
+
+      .main {
+        width: 380px;
+        padding: 2rem;
+        backdrop-filter: blur(12px);
+        background: rgba(10, 10, 10, 0.222);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      h1 {
+        color: white;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 2rem;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      input {
+        width: 100%;
+        padding: 18px;
+        border: 2px solid black;
+        border-radius: 10px;
+        background: white;
+        color: black;
+        font-size: 1rem;
+        box-sizing: border-box;
+      }
+
+      ::placeholder {
+        color: black;
+        font-weight: bold;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+      }
+
+      .btn {
+        width: 100px;
+        padding: 12px 0;
+        border-radius: 10px;
+        background: white;
+        color: black;
+        border: 2px solid black;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn:hover {
+        background: black;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .links {
+        margin-top: 1.5rem;
+        text-align: center;
+        color: white;
+      }
+
+      .links a {
+        color: white;
+        text-decoration: none;
+        margin: 0 0.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .links a:hover {
+        text-decoration: underline;
+      }
+
+      .guest-prefix {
+        color: white;
+      }
+
+      .guest-link {
+        color: white;
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      @media (max-width: 480px) {
+        .main {
+          width: 90%;
+          padding: 1.5rem;
+        }
+
+        h1 {
+          font-size: 1.75rem;
+        }
+
+        input {
+          padding: 15px;
+          font-size: 0.9rem;
+        }
+
+        .btn {
+          width: 90px;
+          padding: 10px 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <h1>Admin Login</h1>
+      <form id="loginForm">
+        <div class="form-group">
+          <input type="email" id="email" placeholder="Email" required />
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+
+        <div class="btn-container">
+          <button type="submit" class="btn">Submit</button>
+        </div>
+      </form>
+
+      <div class="links">
+        <span class="guest-prefix">Login as a</span>
+        <span id="guestLogin" class="guest-link">Guest</span>
+      </div>
+    </div>
+
+    <script>
+      var admin = {
+        email: "jayakrishnap@gmail.com",
+        password: "1234",
+      };
+
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          var emailInput = document.getElementById("email");
+          var passwordInput = document.getElementById("password");
+
+          var users = {
+            email: emailInput.value,
+            password: passwordInput.value,
+          };
+
+          if (
+            admin.email === users.email &&
+            admin.password === users.password
+          ) {
+            alert("Login Successfully");
+            localStorage.setItem("userRole", "admin");
+            window.location.assign("adminpage.html");
+          } else {
+            alert("Invalid Email or Password");
+          }
+
+          emailInput.value = "";
+          passwordInput.value = "";
+        });
+
+      document
+        .getElementById("guestLogin")
+        .addEventListener("click", function () {
+          localStorage.setItem("userRole", "guest");
+          window.location.assign("adminpage.html");
+        });
+    </script>
+  </body>
+</html>
