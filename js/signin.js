@@ -1,23 +1,33 @@
 // Import Firebase SDK modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
+
 import {
   getAuth,
   signInWithEmailAndPassword,
-} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js";
+
+import {
+  getFirestore,
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-firestore.js";
+
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB3Aqo1D1-cm-hoWLQAbNDnddeKhpzaJTs",
-  authDomain: "tour-planner-fa16a.firebaseapp.com",
-  projectId: "tour-planner-fa16a",
-  storageBucket: "tour-planner-fa16a.firebasestorage.app",
-  messagingSenderId: "705159543203",
-  appId: "1:705159543203:web:cf35ffd74078adbbfc4216",
+  apiKey: "AIzaSyC2TnHdt-Xzu9WCWWrq7uZCPoi1uXPk84c",
+  authDomain: "tour-planner-js.firebaseapp.com",
+  projectId: "tour-planner-js",
+  storageBucket: "tour-planner-js.firebasestorage.app",
+  messagingSenderId: "449021203433",
+  appId: "1:449021203433:web:ed3dd40b0f35b0fe57b178"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);   // 🔥 Firestore initialized
+
 
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("signinForm");
@@ -61,7 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     clearError(emailInput);
     clearError(passwordInput);
 
-    // Validate email
     if (!emailInput.value) {
       showError(emailInput, "Email is required");
       isValid = false;
@@ -70,7 +79,6 @@ document.addEventListener("DOMContentLoaded", function () {
       isValid = false;
     }
 
-    // Validate password
     if (!passwordInput.value) {
       showError(passwordInput, "Password is required");
       isValid = false;
@@ -86,20 +94,27 @@ document.addEventListener("DOMContentLoaded", function () {
           email,
           password
         );
-        console.log("User signed in:", userCredential.user);
 
-        // Store user info in localStorage
-        const user = {
-          name: userCredential.user.email.split("@")[0],
-          email: userCredential.user.email,
-        };
-        localStorage.setItem("userinfo", JSON.stringify([user]));
+        const firebaseUser = userCredential.user;
+        console.log("User signed in:", firebaseUser);
+
+        // 🔥 Fetch user data from Firestore
+        const userDoc = await getDoc(doc(db, "users", firebaseUser.uid));
+
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+
+          // Store user info in localStorage
+          localStorage.setItem("userinfo", JSON.stringify([userData]));
+        }
 
         alert("SignIn Successful");
         form.reset();
-        window.location.href = "./main.html"; // Redirect after successful login
+        window.location.href = "./main.html";
+
       } catch (error) {
         console.error("SignIn error:", error);
+
         if (
           error.code === "auth/user-not-found" ||
           error.code === "auth/wrong-password"

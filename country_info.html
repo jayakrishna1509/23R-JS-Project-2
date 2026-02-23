@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Country Search</title>
+    <link rel="icon" href="./assets/images/vector.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #1c0a51, #0a2351);
+        color: white;
+        font-family: "Arial", sans-serif;
+        min-height: 100vh;
+      }
+
+      /* Navbar Styles */
+      .navbar {
+        background-color: #160742 !important;
+        padding: 0.8rem 1.5rem !important;
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        opacity: 0.9 !important;
+        z-index: 1000 !important;
+        width: 100%;
+      }
+
+      .navbar-brand img {
+        height: 60px;
+      }
+
+      .nav-link {
+        color: white !important;
+        margin: 0 20px;
+        position: relative;
+        font-size: 18px;
+        font-weight: bold !important;
+        transition: color 0.3s ease;
+        padding-bottom: 5px;
+        cursor: pointer;
+      }
+
+      .nav-link:hover,
+      .nav-link:focus {
+        color: #10D4E6 !important;
+      }
+
+      .nav-link::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: white;
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::after,
+      .nav-link:focus::after {
+        width: 80%;
+      }
+
+      .btn-blue {
+        background-color: #1e66a4;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        border-radius: 20px;
+        cursor: pointer;
+        outline: none;
+        text-decoration: none;
+        display: inline-block;
+        transition: transform 0.3s ease;
+      }
+
+      .btn-blue:hover,
+      .btn-blue:focus {
+        background-color: #1e66a4 !important;
+        border: none !important;
+        box-shadow: none !important;
+        outline: none !important;
+        color: white !important;
+      }
+
+      .profile-section {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .profile-section i {
+        font-size: 24px;
+        margin-right: 10px;
+      }
+
+      .log-user {
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      .profile-section .btn-blue {
+        margin-left: 50px;
+      }
+
+      .navbar-toggler {
+        border: none !important;
+        padding: 0 !important;
+        outline: none !important;
+        box-shadow: none !important;
+      }
+
+      .hamburger-icon {
+        width: 30px;
+        height: 20px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .hamburger-icon span {
+        display: block;
+        position: absolute;
+        height: 2px;
+        width: 100%;
+        background-color: white;
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+
+      .hamburger-icon span:nth-child(1) {
+        top: 0;
+      }
+      .hamburger-icon span:nth-child(2) {
+        top: 9px;
+      }
+      .hamburger-icon span:nth-child(3) {
+        top: 18px;
+      }
+
+      .navbar-toggler[aria-expanded="true"] .hamburger-icon span:nth-child(1) {
+        transform: rotate(45deg);
+        top: 9px;
+      }
+
+      .navbar-toggler[aria-expanded="true"] .hamburger-icon span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .navbar-toggler[aria-expanded="true"] .hamburger-icon span:nth-child(3) {
+        transform: rotate(-45deg);
+        top: 9px;
+      }
+
+      /* Media Queries */
+      @media (max-width: 767px) {
+        .navbar {
+          padding: 1rem !important;
+          position: sticky;
+        }
+
+        .navbar-brand img {
+          height: 40px;
+        }
+
+        .navbar-collapse {
+          background-color: #160742;
+          padding: 1rem 0;
+          margin: 0 -1rem;
+        }
+
+        .nav-item {
+          margin: 5px 0;
+          padding: 0 1rem;
+        }
+
+        .nav-link {
+          padding: 8px 0;
+          margin: 0;
+          font-size: 16px;
+        }
+
+        .profile-section {
+          width: 100%;
+          padding: 0.5rem 1rem;
+          justify-content: flex-start;
+          margin-top: 10px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-section .btn-blue {
+          margin-left: auto;
+        }
+
+        .main {
+          min-height: calc(100vh - 72px);
+          padding: 1rem;
+        }
+
+        .nav-link::after {
+          content: none; /* Remove the underline effect */
+        }
+      }
+
+      @media (min-width: 768px) and (max-width: 991px) {
+        .navbar {
+          padding: 0.8rem 1.5rem;
+          position: sticky;
+          top: 0;
+        }
+
+        .navbar-collapse {
+          background-color: #160742;
+          padding: 1rem;
+        }
+
+        .nav-item {
+          margin: 8px 0;
+          padding: 0 1rem;
+        }
+
+        .profile-section {
+          width: 100%;
+          padding: 0.5rem 1rem;
+          margin-top: 10px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .main {
+          min-height: calc(100vh - 76px);
+          padding: 1.5rem;
+        }
+
+        .nav-link::after {
+          content: none; /* Remove the underline effect */
+        }
+      }
+
+      @media (min-width: 992px) {
+        .main {
+          min-height: calc(100vh - 76px);
+          padding: 2rem;
+        }
+      }
+
+      .title {
+        text-align: center;
+        margin-top: 20vh;
+        font-size: 3rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        padding-top: 60px;
+      }
+
+      .title h1 {
+        font-weight: bold;
+      }
+
+      .info-list {
+        display: flex;
+        justify-content: center;
+        margin-top: 60px;
+      }
+
+      .unlist {
+        display: flex;
+        gap: 50px;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+      }
+
+      .list {
+        list-style: none;
+        font-size: 1.3rem;
+        font-weight: bold;
+        cursor: pointer;
+        color: white;
+        transition: all 0.3s ease;
+        padding: 10px;
+        border-radius: 20px;
+        background-color: transparent;
+      }
+
+      .list:hover {
+        text-decoration: underline;
+        transform: translateY(-3px);
+      }
+
+      .li1 {
+        text-decoration: underline;
+      }
+
+      .search-bar {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+        padding: 0 20px;
+      }
+
+      .search-form {
+        width: 100%;
+        max-width: 600px;
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+      }
+
+      .form-group {
+        width: 100%;
+        border: 2px solid rgb(255, 255, 255);
+        height: 50px;
+        border-radius: 25px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .search {
+        width: 100%;
+        border: none;
+        font-size: 18px;
+        padding: 10px 20px;
+        background: transparent;
+        color: white;
+      }
+
+      ::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .btn1 {
+        min-width: 100px;
+        height: 100%;
+        border-radius: inherit;
+        background-color: #fff;
+        color: #000;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 50px;
+        margin-bottom: 30px;
+      }
+
+      #card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border-radius: 15px;
+        width: 300px;
+        height: 350px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        position: relative;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      #card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 45px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      }
+
+      .img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+      }
+
+      #card:hover .img {
+        transform: scale(1.08);
+      }
+
+      #ptag1 {
+        font-size: 18px;
+        text-align: center;
+        padding: 20px;
+        color: white;
+        font-weight: 500;
+      }
+
+      #card1 {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 15px;
+        width: 100%;
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 30px;
+        position: relative;
+        box-shadow: 0 12px 45px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        transition: all 0.3s ease;
+      }
+
+      #card1:hover {
+        transform: translateY(-5px);
+      }
+
+      .acth2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #ffd700;
+      }
+
+      #ptag {
+        font-size: 18px;
+        text-align: justify;
+        color: white;
+      }
+
+      .tables,
+      .tables1 {
+        width: 100%;
+        overflow-x: auto;
+        margin-top: 30px;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        margin-bottom: 2rem;
+      }
+
+      .tables h1 {
+        color: white;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        font-size: 2.5rem;
+      }
+
+      th {
+        background-color: #1e66a4;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      td {
+        padding: 20px;
+        text-align: center;
+        background-color: rgb(228, 237, 245);
+        color: black;
+      }
+
+      th {
+        background-color: #1e66a4;
+        color: white;
+        padding: 20px;
+        text-align: left;
+        border-right: 1px solid black;
+      }
+
+      td {
+        padding: 20px;
+        text-align: left;
+        border-right: 1px solid black;
+        border-bottom: 1px solid black;
+        color: #000;
+      }
+
+      tr:nth-child(even) {
+        background-color: rgba(0, 20, 40, 0.5);
+      }
+
+      tr:nth-child(odd) {
+        background-color: rgba(0, 20, 40, 0.3);
+      }
+
+      tr:hover {
+        background-color: rgba(0, 20, 40, 0.7);
+      }
+
+      th:last-child,
+      td:last-child {
+        border-right: none;
+      }
+
+      .tables h1 {
+        color: #ffd700;
+        margin-bottom: 20px;
+        font-size: 24px;
+      }
+
+      .tables + .tables {
+        margin-top: 30px;
+      }
+
+      /* Responsive media queries for all screens */
+@media (max-width: 1200px) {
+  #card, #card1 {
+    max-width: 90vw;
+    width: 90vw;
+    height: auto;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  .container {
+    gap: 15px;
+  }
+  table {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 992px) {
+  .title {
+    font-size: 2.2rem;
+    margin-top: 12vh;
+    padding-top: 50px;
+  }
+  .info-list {
+    margin-top: 30px;
+  }
+  .unlist {
+    gap: 25px;
+  }
+  #card, #card1 {
+    max-width: 98vw;
+    width: 98vw;
+    padding: 12px;
+  }
+  table {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.5rem 0.5rem !important;
+  }
+  .title {
+    font-size: 1.5rem;
+    margin-top: 8vh;
+    padding-top: 80px;
+  }
+  .info-list {
+    margin-top: 20px;
+  }
+  .unlist {
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+  }
+  #card {
+    width: 90vw;
+    height: auto;
+    padding: 12px;
+  }
+  #card1 {
+    max-width: 95vw;
+    width: 95vw;
+    padding: 20px;
+    margin: 15px auto;
+  }
+  .acth2 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+  #ptag {
+    font-size: 15px;
+  }
+  #ptag1 {
+    font-size: 16px;
+    padding: 15px;
+  }
+  .container {
+    gap: 12px;
+    flex-direction: column;
+    align-items: center;
+  }
+  table {
+    font-size: 13px;
+    padding: 0;
+  }
+  th, td {
+    padding: 8px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar {
+    padding: 0.2rem 0.2rem !important;
+  }
+  .title {
+    font-size: 1.1rem;
+    margin-top: 4vh;
+    padding-top: 90px;
+  }
+  #card {
+    width: 100vw;
+    height: auto;
+    padding: 8px;
+  }
+  #card1 {
+    max-width: 98vw;
+    width: 98vw;
+    padding: 15px;
+    margin: 10px auto;
+  }
+  .acth2 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+  #ptag {
+    font-size: 13px;
+  }
+  #ptag1 {
+    font-size: 14px;
+    padding: 12px;
+  }
+  .container {
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 400px) {
+  .navbar {
+    padding: 0.1rem 0.1rem !important;
+  }
+  .title {
+    font-size: 0.8rem;
+    margin-top: 2vh;
+    padding-top: 100px;
+  }
+  #card {
+    width: 100vw;
+    height: auto;
+    padding: 6px;
+  }
+  #card1 {
+    max-width: 100vw;
+    width: 100vw;
+    padding: 12px;
+    margin: 8px auto;
+    border-radius: 10px;
+  }
+  .acth2 {
+    font-size: 1rem;
+    margin-bottom: 10px;
+  }
+  #ptag {
+    font-size: 12px;
+  }
+  #ptag1 {
+    font-size: 13px;
+    padding: 10px;
+  }
+  .container {
+    gap: 6px;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 300px) {
+  #card {
+    width: 100vw;
+    height: auto;
+    padding: 4px;
+  }
+  #card1 {
+    max-width: 100vw;
+    width: 100vw;
+    padding: 10px;
+    margin: 5px auto;
+  }
+  .acth2 {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+  }
+  #ptag {
+    font-size: 11px;
+  }
+  #ptag1 {
+    font-size: 12px;
+    padding: 8px;
+  }
+  .container {
+    gap: 4px;
+    flex-direction: column;
+    align-items: center;
+  }
+  table {
+    font-size: 11px;
+    padding: 0;
+  }
+  th, td {
+    padding: 4px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 400px) {
+  .navbar {
+    padding: 0.1rem 0.1rem !important;
+  }
+  .title {
+    font-size: 0.8rem;
+    margin-top: 2vh;
+    padding-top: 100px;
+  }
+  #card, #card1 {
+    padding: 2px;
+    border-radius: 5px;
+  }
+  th, td {
+    padding: 2px;
+    font-size: 9px;
+  }
+}
+
+/* End responsive media queries */
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="../assets/images/logo.png" alt="Logo" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
+          aria-controls="navbarContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <div class="hamburger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="../main.html#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../main.html#services">Services</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../main.html#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../main.html#packages">Packages</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Country Info</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../main.html#book">Book</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../main.html#reviews">Reviews</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="../main.html#contact">Contact</a>
+            </li>
+          </ul>
+          <div class="profile-section">
+            <i class="fa-regular fa-circle-user"></i>
+            <span class="log-user">Guest</span>
+            <button class="btn-blue admin">Admin Login</button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="title">
+      <h1>Explore the World</h1>
+    </div>
+
+    <div class="info-list">
+      <ul class="unlist">
+        <li class="li1 list">Find an Embassy Abroad</li>
+        <li class="list">Country Details</li>
+        <li class="list">Country Activities</li>
+        <li class="list">Brief Info About A Country</li>
+      </ul>
+    </div>
+
+    <div class="search-bar">
+      <form id="searchForm" class="search-form">
+        <div id="sourceCountryGroup" class="form-group">
+          <input
+            type="search"
+            class="search"
+            id="countryInput"
+            placeholder="Country Name"
+            required
+          />
+        </div>
+        <div id="destinationGroup" class="form-group">
+          <input
+            type="search"
+            class="search"
+            id="destinationInput"
+            placeholder="Where to?"
+            required
+          />
+          <button class="btn1" type="submit">Search</button>
+        </div>
+        <div id="singleSearchGroup" class="form-group" style="display: none">
+          <input
+            type="search"
+            class="search"
+            id="singleInput"
+            placeholder="Country Name"
+            required
+          />
+          <button class="btn1" type="submit">Search</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="container"></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // User info handling
+        var data = window.localStorage.getItem("userinfo");
+        var user = JSON.parse(data);
+        if (data) {
+          document.getElementsByClassName("log-user")[0].innerText =
+            user[0]["name"];
+        }
+
+        // Admin Login button handler
+        const adminButton = document.querySelector(".btn-blue.admin");
+        if (adminButton) {
+          adminButton.addEventListener("click", () => {
+            if (data) {
+              window.localStorage.removeItem("userinfo");
+              window.location.href = "../main.html";
+            } else {
+              window.location.href = "../adminlogin.html";
+            }
+          });
+        }
+
+        // Form handling setup
+        const searchForm = document.getElementById("searchForm");
+        const sourceCountryGroup =
+        document.getElementById("sourceCountryGroup");
+        const destinationGroup = document.getElementById("destinationGroup");
+        const singleSearchGroup = document.getElementById("singleSearchGroup");
+        const countryInput = document.getElementById("countryInput");
+        const destinationInput = document.getElementById("destinationInput");
+        const singleInput = document.getElementById("singleInput");
+        let currentSearchType = "embassy";
+
+        function updateSearchForm(type) {
+          currentSearchType = type;
+          switch (type) {
+            case "embassy":
+              sourceCountryGroup.style.display = "flex";
+              destinationGroup.style.display = "flex";
+              singleSearchGroup.style.display = "none";
+              countryInput.placeholder = "Country Name";
+              destinationInput.placeholder = "Where to?";
+              countryInput.required = true;
+              destinationInput.required = true;
+              singleInput.required = false;
+              break;
+            case "details":
+            case "activities":
+            case "brief":
+              sourceCountryGroup.style.display = "none";
+              destinationGroup.style.display = "none";
+              singleSearchGroup.style.display = "flex";
+              singleInput.placeholder = "Country Name";
+              countryInput.required = false;
+              destinationInput.required = false;
+              singleInput.required = true;
+              break;
+          }
+        }
+
+        searchForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          document.querySelector(".container").innerHTML = "";
+
+          let country, destination;
+          if (currentSearchType === "embassy") {
+            country = countryInput.value.replace(" ", "%20");
+            destination = destinationInput.value.replace(" ", "%20");
+          } else {
+            country = singleInput.value.replace(" ", "%20");
+          }
+
+          let url;
+          switch (currentSearchType) {
+            case "embassy":
+              url = `https://travel-info-api.p.rapidapi.com/find-embassy?source=${country}&destination=${destination}`;
+              break;
+            case "details":
+              url = `https://travel-info-api.p.rapidapi.com/country-details?country=${country}`;
+              break;
+            case "activities":
+              url = `https://travel-info-api.p.rapidapi.com/country-activities?country=${country}`;
+              break;
+            case "brief":
+              url = `https://travel-info-api.p.rapidapi.com/country?country=${country}`;
+              break;
+          }
+
+          const options = {
+            method: "GET",
+            headers: {
+              "X-RapidAPI-Key": "85c39f570bmsh6021967c3278783p1143c2jsnae41703e9b6f",
+                // "X-RapidAPI-Key": "a1c018d97fmsh0781fd8d62d20d8p1d5077jsn8bb7431b7da1",
+              "X-RapidAPI-Host": "travel-info-api.p.rapidapi.com",
+            },
+          };
+
+          // Make API request using promises (without async/await)
+          fetch(url, options)
+            .then(function (response) {
+              if (!response.ok) {
+                throw new Error("API request failed");
+              }
+              return response.json();
+            })
+            .then(function (data) {
+              displayResults(data, currentSearchType);
+            })
+            .catch(function (error) {
+              console.error("Error:", error);
+              const container = document.querySelector(".container");
+              
+              if (currentSearchType === "embassy") {
+                const errorParagraph = document.createElement("p");
+                errorParagraph.style.color = "white";
+                errorParagraph.style.textAlign = "center";
+                errorParagraph.style.fontSize = "18px";
+                errorParagraph.style.marginBottom = "20px";
+                errorParagraph.innerText = "Failed to fetch data. Please try again later.";
+                container.appendChild(errorParagraph);
+                
+                const tables = document.createElement("div");
+                tables.className = "tables";
+                tables.innerHTML = `
+                  <h1 style="color: white; font-weight: bold;">Embassy Details</h1>
+                  <table>
+                    <tr>
+                      <th>Sl.No</th>
+                      <th>Address</th>
+                      <th>Phone</th>
+                    </tr>
+                    <tr>
+                      <td style="border-right: 1px solid black; padding: 20px;"></td>
+                      <td style="border-right: 1px solid black; padding: 20px;"></td>
+                      <td style="padding: 20px;"></td>
+                    </tr>
+                  </table>
+                `;
+                container.appendChild(tables);
+              } else {
+                const errorMessage = document.createElement("p");
+                errorMessage.innerText =
+                  "Failed to fetch data. Please try again later.";
+                errorMessage.style.color = "white";
+                errorMessage.style.textAlign = "center";
+                container.appendChild(errorMessage);
+              }
+            });
+        });
+
+        function displayResults(data, type) {
+          const container = document.querySelector(".container");
+
+          switch (type) {
+            case "embassy":
+              const tables = document.createElement("div");
+              tables.className = "tables";
+              
+              console.log("Embassy data:", data);
+              
+              if (data && data.data && Array.isArray(data.data) && data.data.length > 0) {
+                tables.innerHTML = `
+                  <h1 style="color: white; font-weight: bold;">Embassy Details</h1>
+                  <table>
+                    <tr>
+                      <th>Sl.No</th>
+                      <th>Address</th>
+                      <th>Phone</th>
+                    </tr>
+                    ${data.data
+                      .map(
+                        (embassy, index) => `
+                        <tr>
+                          <td>${index + 1}</td>
+                          <td>${embassy.address || "N/A"}</td>
+                          <td>${embassy.phone || "N/A"}</td>
+                        </tr>
+                      `
+                      )
+                      .join("")}
+                  </table>
+                `;
+              } else {
+                tables.innerHTML = `
+                  <h1 style="color: white; font-weight: bold;">Embassy Details</h1>
+                  <table>
+                    <tr>
+                      <th>Sl.No</th>
+                      <th>Address</th>
+                      <th>Phone</th>
+                    </tr>
+                    <tr>
+                      <td colspan="3" style="text-align: center; color: #666; padding: 20px;">No embassy data found for the selected countries.</td>
+                    </tr>
+                  </table>
+                `;
+              }
+              container.appendChild(tables);
+              break;
+
+            case "details":
+              // First create the details card with two separate tables
+              const detailsCard = document.createElement("div");
+              detailsCard.className = "tables";
+              detailsCard.innerHTML = `
+                <h1 class="text-center text-white mb-4">Country Details</h1>
+                <table class="mb-4">
+                  <tr>
+                    <th>Country Name</th>
+                    <th>Continent</th>
+                    <th>Capital</th>
+                    <th>Government</th>
+                    <th>Official Language</th>
+                  </tr>
+                  <tr>
+                    <td>${data.countryName}</td>
+                    <td>${data.continent}</td>
+                    <td>${data.capital}</td>
+                    <td>${data.government}</td>
+                    <td>${data.officialLanguages}</td>
+                  </tr>
+                </table>
+                <table>
+                  <tr>
+                    <th>Population</th>
+                    <th>Population Density Km2</th>
+                    <th>Population Density Sqmi</th>
+                    <th>Surface Area Km2</th>
+                    <th>Surface Area Sqmi</th>
+                    <th>Border Length</th>
+                  </tr>
+                  <tr>
+                    <td>${data.population}</td>
+                    <td>${data.populationDensityKm2}</td>
+                    <td>${data.populationDensitySqMi}</td>
+                    <td>${data.surfaceAreaKm2}</td>
+                    <td>${data.surfaceAreaSqMi}</td>
+                    <td>${data.borderLength} km / ${Math.round(
+                data.borderLength / 1.609
+              )} miles</td>
+                  </tr>
+                </table>
+              `;
+              container.appendChild(detailsCard);
+
+              // Then create a separate table for neighbor countries
+              const neighborsCard = document.createElement("div");
+              neighborsCard.className = "tables";
+              
+              if (data.neighborsList && data.neighborsList.length > 0) {
+                neighborsCard.innerHTML = `
+                  <h1 class="text-center text-white mb-4">Neighbour Countries List</h1>
+                  <table>
+                    <tr>
+                      <th>Sl. NO</th>
+                      <th>Country Name</th>
+                    </tr>
+                    ${data.neighborsList
+                      .map(
+                        (country, index) => `
+                      <tr>
+                        <td>${index + 1}</td>
+                        <td>${country}</td>
+                      </tr>
+                    `
+                      )
+                      .join("")}
+                  </table>
+                `;
+              } else {
+                neighborsCard.innerHTML = `
+                  <h1 class="text-center text-white mb-4">Neighbour Countries List</h1>
+                  <p style="color: white; text-align: center;">No neighbouring countries data unavailable.</p>
+                `;
+              }
+              container.appendChild(neighborsCard);
+              break;
+
+            case "activities":
+              if (data.data && Array.isArray(data.data.activities)) {
+                data.data.activities.forEach(function (activity) {
+                  const card = document.createElement("div");
+                  card.id = "card1";
+                  card.innerHTML = `
+                    <h2 class="acth2">${activity.title}</h2>
+                    <div class="divcontainer">
+                      <p id="ptag">${activity.activity}</p>
+                    </div>
+                  `;
+                  createCloseButton(card);
+                  container.appendChild(card);
+                });
+              } else {
+                const noActivitiesMessage = document.createElement("p");
+                noActivitiesMessage.innerText =
+                  "No activities found for this country.";
+                container.appendChild(noActivitiesMessage);
+              }
+              break;
+
+            case "brief":
+              if (data.data && Array.isArray(data.data.country_images)) {
+                data.data.country_images.forEach(function (image) {
+                  const card = document.createElement("div");
+                  card.id = "card";
+                  card.innerHTML = `
+                    <img src="${image.imageUrl}" class="img" alt="${
+                    image.title
+                  }">
+                    <p id="ptag1">${image.title}</p>
+                    <p style="text-align: center; font-size: 14px; margin-top: 5px;">
+                      Rating: ${
+                        Math.floor(Math.random() * 5) + 1
+                      }/5 | Category: Tourism
+                    </p>
+                  `;
+                  createCloseButton(card);
+                  container.appendChild(card);
+                });
+              } else {
+                const noInfoMessage = document.createElement("p");
+                noInfoMessage.innerText =
+                  "No brief information available for this country.";
+                container.appendChild(noInfoMessage);
+              }
+              break;
+          }
+        }
+
+        // List item click handlers
+        const litag = document.getElementsByClassName("list");
+
+        litag[0].addEventListener("click", function () {
+          updateSearchForm("embassy");
+          document.querySelector(".container").innerHTML = "";
+          Array.from(litag).forEach(function (item) {
+            item.style.textDecoration = "none";
+          });
+          litag[0].style.textDecoration = "underline";
+        });
+
+        litag[1].addEventListener("click", function () {
+          updateSearchForm("details");
+          document.querySelector(".container").innerHTML = "";
+          Array.from(litag).forEach(function (item) {
+            item.style.textDecoration = "none";
+          });
+          litag[1].style.textDecoration = "underline";
+        });
+
+        litag[2].addEventListener("click", function () {
+          updateSearchForm("activities");
+          document.querySelector(".container").innerHTML = "";
+          Array.from(litag).forEach(function (item) {
+            item.style.textDecoration = "none";
+          });
+          litag[2].style.textDecoration = "underline";
+        });
+
+        litag[3].addEventListener("click", function () {
+          updateSearchForm("brief");
+          document.querySelector(".container").innerHTML = "";
+          Array.from(litag).forEach(function (item) {
+            item.style.textDecoration = "none";
+          });
+          litag[3].style.textDecoration = "underline";
+        });
+
+        // Neighbor Countries List section
+        function displayNeighborCountries(data) {
+          const container = document.querySelector(".container");
+          const neighborsList = document.createElement("div");
+          neighborsList.className = "tables";
+          neighborsList.innerHTML = `
+            <h1>Neighbor Countries List</h1>
+            <table>
+              <tr>
+                <th>Sl. No</th>
+                <th>Country Name</th>
+              </tr>
+              ${data.neighborsList
+                .map(
+                  (country, index) => `
+                <tr>
+                  <td>${index + 1}</td>
+                  <td>${country}</td>
+                </tr>
+              `
+                )
+                .join("")}
+            </table>
+          `;
+          container.appendChild(neighborsList);
+        }
+
+        // Initialize with embassy search form
+        updateSearchForm("embassy");
+
+        function createCloseButton(card) {
+          const closeButton = document.createElement("button");
+          closeButton.innerText = "X";
+          closeButton.style.cssText = `
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+          `;
+          closeButton.addEventListener("click", function () {
+            card.remove();
+          });
+          card.appendChild(closeButton);
+        }
+      });
+    </script>
+  </body>
+</html>

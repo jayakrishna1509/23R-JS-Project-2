@@ -1,20 +1,20 @@
 // Import Firebase SDK modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.9.0/firebase-app.js";
 import {
   getAuth,
   updatePassword,
   EmailAuthProvider,
   reauthenticateWithCredential,
-} from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/12.9.0/firebase-auth.js"; // ✅ fixed import
 
 // Your Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB3Aqo1D1-cm-hoWLQAbNDnddeKhpzaJTs",
-  authDomain: "tour-planner-fa16a.firebaseapp.com",
-  projectId: "tour-planner-fa16a",
-  storageBucket: "tour-planner-fa16a.firebasestorage.app",
-  messagingSenderId: "705159543203",
-  appId: "1:705159543203:web:cf35ffd74078adbbfc4216",
+  apiKey: "AIzaSyC2TnHdt-Xzu9WCWWrq7uZCPoi1uXPk84c",
+  authDomain: "tour-planner-js.firebaseapp.com",
+  projectId: "tour-planner-js",
+  storageBucket: "tour-planner-js.firebasestorage.app",
+  messagingSenderId: "449021203433",
+  appId: "1:449021203433:web:ed3dd40b0f35b0fe57b178"
 };
 
 // Initialize Firebase
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
       showError(emailInput, "Please fill out this field");
       isValid = false;
     } else if (!validateEmail(emailInput.value)) {
-      showError(emailInput, "Please fill out this field");
+      showError(emailInput, "Please enter a valid email");
       isValid = false;
     }
 
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
       showError(newPasswordInput, "Please fill out this field");
       isValid = false;
     } else if (newPasswordInput.value.length < 6) {
-      showError(newPasswordInput, "Please fill out this field");
+      showError(newPasswordInput, "Password must be at least 6 characters");
       isValid = false;
     }
 
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
       showError(confirmPasswordInput, "Please fill out this field");
       isValid = false;
     } else if (newPasswordInput.value !== confirmPasswordInput.value) {
-      showError(confirmPasswordInput, "Please fill out this field");
+      showError(confirmPasswordInput, "Passwords do not match");
       isValid = false;
     }
 
@@ -108,32 +108,29 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 3000);
       } catch (error) {
         console.error("Error updating password:", error);
+
         if (error.code === "auth/wrong-password") {
-          showError(currentPasswordInput, "Please fill out this field");
+          showError(currentPasswordInput, "Incorrect current password");
         } else if (error.code === "auth/user-mismatch") {
-          showError(emailInput, "Please fill out this field");
+          showError(emailInput, "Email does not match current user");
         } else {
-          showError(emailInput, "Please fill out this field");
+          alert(`Password update failed: ${error.message}`);
         }
       }
     }
   });
 
-  emailInput.addEventListener("focus", () => clearError(emailInput));
-  currentPasswordInput.addEventListener("focus", () =>
-    clearError(currentPasswordInput)
-  );
-  newPasswordInput.addEventListener("focus", () =>
-    clearError(newPasswordInput)
-  );
-  confirmPasswordInput.addEventListener("focus", () =>
-    clearError(confirmPasswordInput)
+  // Clear errors on focus
+  [emailInput, currentPasswordInput, newPasswordInput, confirmPasswordInput].forEach(
+    (input) => {
+      input.addEventListener("focus", () => clearError(input));
+    }
   );
 
-  // Add input event listeners for real-time validation
+  // Real-time validation
   emailInput.addEventListener("input", function () {
     if (this.value && !validateEmail(this.value)) {
-      showError(this, "Please fill out this field");
+      showError(this, "Please enter a valid email");
     } else {
       clearError(this);
     }
@@ -141,7 +138,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   newPasswordInput.addEventListener("input", function () {
     if (this.value && this.value.length < 6) {
-      showError(this, "Please fill out this field");
+      showError(this, "Password must be at least 6 characters");
     } else {
       clearError(this);
     }
@@ -149,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   confirmPasswordInput.addEventListener("input", function () {
     if (this.value && this.value !== newPasswordInput.value) {
-      showError(this, "Please fill out this field");
+      showError(this, "Passwords do not match");
     } else {
       clearError(this);
     }

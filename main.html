@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HomePage</title>
-    <link rel="icon" href="./assets/images/logo.jpg" type="image/x-icon" />
+    <link rel="icon" href="./assets/images/vector.png" type="image/x-icon" />
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -53,7 +53,7 @@
 
       .nav-link:hover,
       .nav-link:focus {
-        color: #1e66a4 !important;
+        color: #10D4E6 !important;
       }
 
       .nav-link::after {
@@ -66,11 +66,83 @@
         transform: translateX(-50%);
         background-color: white;
         transition: width 0.3s ease;
+        opacity: 0;
       }
 
       .nav-link:hover::after,
       .nav-link:focus::after {
         width: 80%;
+        opacity: 1;
+      }
+
+      /* Dropdown styles */
+      .nav-item-dropdown {
+        position: relative;
+      }
+
+      .dropdown-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding-bottom: 5px !important;
+      }
+
+      .dropdown-toggle::after {
+        width: 0;
+        height: 2px;
+        background-color: white;
+        transition: width 0.3s ease;
+        opacity: 0;
+      }
+
+      .dropdown-toggle:hover::after,
+      .dropdown-toggle:focus::after {
+        width: 90%;
+        opacity: 1;
+        font-size: 1px;
+      }
+
+      .dropdown-icon {
+        font-size: 12px;
+        transition: transform 0.3s ease;
+      }
+
+      .dropdown-icon.active {
+        transform: rotate(180deg);
+      }
+
+      .dropdown-menu-custom {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #160742;
+        border: none;
+        border-radius: 8px;
+        min-width: 150px;
+        list-style: none;
+        padding: 10px 0;
+        margin: 10px 0 0 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        z-index: 1001;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      .dropdown-menu-custom.show {
+        max-height: 500px;
+      }
+
+      .dropdown-menu-custom li {
+        margin: 0;
+      }
+
+      .dropdown-menu-custom a {
+        display: block;
+        padding: 12px 20px;
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
       }
 
       .btn-blue {
@@ -1267,8 +1339,14 @@
             <li class="nav-item">
               <a class="nav-link" href="#packages">Packages</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="./API/places_api.html">Country Info</a>
+            <li class="nav-item nav-item-dropdown">
+              <a class="nav-link dropdown-toggle" href="country_info.html">
+                Country Info
+                <i class="fas fa-chevron-down dropdown-icon"></i>
+              </a>
+              <ul class="dropdown-menu-custom">
+                <li><a href="./API/places_api.html"><strong>Places Info</strong></a></li>
+              </ul>
             </li>
             <li class="nav-item"><a class="nav-link" href="#book">Book</a></li>
             <li class="nav-item">
@@ -1608,16 +1686,16 @@
               covered. Plan your next adventure with us!
             </p>
             <div class="social-icons">
-              <a href="#" aria-label="Pinterest"
+              <a href="https://www.pinterest.com/" target="_blank" aria-label="Pinterest"
                 ><i class="fab fa-pinterest"></i
               ></a>
-              <a href="#" aria-label="Facebook"
+              <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"
                 ><i class="fab fa-facebook"></i
               ></a>
-              <a href="#" aria-label="Instagram"
+              <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram"
                 ><i class="fab fa-instagram"></i
               ></a>
-              <a href="#" aria-label="YouTube"
+              <a href="https://youtube.com/" target="_blank" aria-label="YouTube"
                 ><i class="fab fa-youtube"></i
               ></a>
             </div>
@@ -1865,6 +1943,28 @@
         e.target[1].value = "";
         e.target[2].value = "";
         e.target[3].value = "";
+      });
+
+      // Dropdown toggle functionality
+      const dropdownToggle = document.querySelector(".dropdown-toggle");
+      const dropdownMenu = document.querySelector(".dropdown-menu-custom");
+      const dropdownIcon = document.querySelector(".dropdown-icon");
+
+      dropdownToggle.addEventListener("click", (e) => {
+        // Only prevent default if clicking on the icon, not the link text
+        if (e.target.closest(".dropdown-icon")) {
+          e.preventDefault();
+          dropdownMenu.classList.toggle("show");
+          dropdownIcon.classList.toggle("active");
+        }
+      });
+
+      // Close dropdown when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!e.target.closest(".nav-item-dropdown")) {
+          dropdownMenu.classList.remove("show");
+          dropdownIcon.classList.remove("active");
+        }
       });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
