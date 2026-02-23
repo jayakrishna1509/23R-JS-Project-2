@@ -6,8 +6,10 @@
 
 * User Authentication API - Google Firebase.
 
-* API
-1) Rapid API - Google Maps Places.
+* Firestore Database - Google Firebase.
+
+**API**
+1) Rapid API - Google Maps Places and Travel Info.
 2) Pexels API - Fetch the Images.
 
 Tech Stack: HTML, CSS, JavaScript, Bootstrap and Firebase.
